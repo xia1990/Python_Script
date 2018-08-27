@@ -9,9 +9,15 @@ str_xml=open("default.xml","r").read()
 root=ET.XML(str_xml)
 
 
-for node in root.iter("project"):
-	#node.attrib['name']得到name属性的值，然后添加PATH属性
-	node.set('path',node.attrib['name'])
+for project in root.findall("project"):
+	path=project.get("path")
+	if path is None:
+		print "没有PATH属性,请进行添加"
+		project.attrib['path']=project.attrib['name']
+	else:
+		print "有PATH属性值,直接输出"
+		project.attrib['path']=project.attrib['path']
+			
 
 #保存文件
 tree=ET.ElementTree(root)
